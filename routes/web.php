@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Photo;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +34,24 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+});
+
+// Route::get('photos', function () {
+//     //dd(Photo::all());
+//     return Inertia::render('Guest/Photos');
+// });
+
+// Route::get('/photos', function () {
+//     return inertia('Admin/Photos', [
+//         'photos' => Photo::all()
+//     ]);
+// })->name('photos');
+
+Route::get('photos', function () {
+    //dd(Photo::all());
+    return Inertia::render('Guest/Photos', [
+        'photos' => Photo::all(), ## 👈 Pass a collection of photos, the key will become our prop in the component
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
 });
